@@ -1,40 +1,50 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+### Part 1
 
-To get started, check out the repository, inspect the code,
-
-### Getting started
-
-####Part 1: Optimize PageSpeed Insights score for index.html
-
-Some useful tips to help you get started:
+#### How to Run
 
 1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+
+2. To inspect the site on your phone, you can run a local server
 
   ```bash
   $> cd /path/to/your-project-folder
   $> python -m SimpleHTTPServer 8080
   ```
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
+3. Open a browser and visit localhost:8080
+
+4. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
 
   ``` bash
   $> cd /path/to/your-project-folder
   $> ngrok http 8080
   ```
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+#### Optimzations
 
-####Part 2: Optimize Frames per Second in pizza.html
+1. Without optimizations the PageSpeed Insights scores were 27 for mobile and 29 for desktop.
+2. All pictures were compressed and optimzed using ImageOptim and other processing software. Pizzeria.jpg was oversized so 
+	it was resized to match the largest container it would be placed in.
+3. Inlined the CSS as suggested by PageSpeed Insights. Fonts were also inlined. 
+4. HTML files were all minified.
+5. Added async to analytics js and moved the scripts to the bottom of the HTML file.
+6. PageSpeed Insights gives a score of 96 for mobile and 95 for desktop.
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+###Part 2: Optimize Frames per Second in pizza.html
+
+In order to produce a consistent 60 FPS the following optimizations were made.
+
+1. changePizzaSizes function was changed as shown in the course video. Created a variable for the DOM query outside of the for loop.
+	This way I can use the variable without quering the DOM during each iteration of the loop. Slider value was changed to percent and
+	the logic for the pizza size was simplified.
+2. updatePositions function was also changed the same way as point 1. This got rid of the Forced Synchronous Layout error shown by Chrome
+	Dev Tools.
+3. Added will-change: transform to .mover class CSS to move background pizzas to different layer.
+4. Changed the number of background pizzas from 200 to 50. Fills page the exact same way as before but loop runs faster now.
 
 ### Optimization Tips and Tricks
 * [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
